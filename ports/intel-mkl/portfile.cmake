@@ -1,16 +1,13 @@
-# Due to the complexity involved, this package doesn't install MKL. It instead verifies that MKL is installed.
-# Other packages can depend on this package to declare a dependency on MKL.
-# If this package is installed, we assume that MKL is properly installed.
-
 set(VCPKG_POLICY_EMPTY_PACKAGE enabled)
 
-set(MKL_REQUIRED_VERSION "20200000")
+set(MKL_REQUIRED_VERSION " 20210002")
 
 set(ProgramFilesx86 "ProgramFiles(x86)")
-set(INTEL_ROOT $ENV{${ProgramFilesx86}}/IntelSWTools/compilers_and_libraries/windows)
+set(INTEL_ROOT $ENV{${ProgramFilesx86}}/Intel/oneAPI/)
 
-find_path(MKL_ROOT include/mkl.h PATHS $ENV{MKLROOT} ${INTEL_ROOT}/mkl DOC "Folder contains MKL")
-
+#find_path(MKL_ROOT include/mkl.h HINTS $ENV{MKLROOT} PATHS $ENV{MKLROOT} ${INTEL_ROOT}/latest/mkl DOC "Folder contains MKL")
+set(MKL_ROOT "C://Program Files (x86)//Intel//oneAPI//mkl//latest")
+message(STATUS "${MKL_ROOT}")
 if (MKL_ROOT STREQUAL "MKL_ROOT-NOTFOUND")
     message(FATAL_ERROR "Could not find MKL. Before continuing, please download and install MKL  (${MKL_REQUIRED_VERSION} or higher) from:"
                         "\n    https://registrationcenter.intel.com/en/products/download/3178/\n"
@@ -23,7 +20,7 @@ endif()
 # list(GET MKL_VERSION 1 MKL_VERSION_MINOR)
 # list(GET MKL_VERSION 2 MKL_VERSION_UPDATE)
 
-file(STRINGS ${MKL_ROOT}/include/mkl_version.h MKL_VERSION_DEFINITION REGEX "INTEL_MKL_VERSION")
+file(STRINGS "${MKL_ROOT}/include/mkl_version.h" MKL_VERSION_DEFINITION REGEX "INTEL_MKL_VERSION")
 string(REGEX MATCH "([0-9]+)" MKL_VERSION ${MKL_VERSION_DEFINITION})
 
 if (MKL_VERSION LESS MKL_REQUIRED_VERSION)

@@ -62,6 +62,7 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
  "tiff"     WITH_TIFF
  "vtk"      WITH_VTK
  "webp"     WITH_WEBP
+ "mkl"      WITH_MKL
  "world"    BUILD_opencv_world
 )
 
@@ -81,6 +82,12 @@ if(VCPKG_TARGET_IS_UWP)
   set(BUILD_opencv_gapi OFF)
   message(WARNING "The gapi module cannot be enabled on UWP platform")
 endif()
+
+set(WITH_MKL OFF)
+if("mkl"IN_LIST FEATURES)
+  set(WITH_MKL ON)
+endif()
+
 
 set(WITH_IPP OFF)
 if("ipp" IN_LIST FEATURES)
@@ -363,6 +370,9 @@ vcpkg_configure_cmake(
         -DHALIDE_ROOT_DIR=${CURRENT_INSTALLED_DIR}
         -DWITH_GTK=OFF
         -DWITH_IPP=${WITH_IPP}
+        -DWITH_MKL=${WITH_MKL}
+        -DMKL_WITH_OPENMP=${WITH_MKL}
+        -DMKL_WITH_TBB=${WITH_TBB}
         -DWITH_MATLAB=OFF
         -DWITH_MSMF=${WITH_MSMF}
         -DWITH_OPENMP=${WITH_OPENMP}

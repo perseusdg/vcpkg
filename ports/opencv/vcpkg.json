@@ -71,7 +71,7 @@
       "dependencies": [
         {
           "name": "opencv4",
-          "default-features": false,
+          "default-features": true,
           "features": [
             "eigen"
           ]
@@ -83,7 +83,7 @@
       "dependencies": [
         {
           "name": "opencv4",
-          "default-features": false,
+          "default-features": true,
           "features": [
             "ffmpeg"
           ]
@@ -275,7 +275,7 @@
       "dependencies": [
         {
           "name": "opencv4",
-          "default-features": false,
+          "default-features": true,
           "features": [
             "tbb"
           ]
